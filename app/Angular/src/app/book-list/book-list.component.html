@@ -1,0 +1,89 @@
+<div class="panel panel-default">  
+    <div class="panel-heading">  
+        <h1 style="text-align: center">Books</h1><br>  
+        <div class="row" [hidden]="!deleteMessage">                 
+                  <div class="col-sm-4"></div>  
+                  <div class="col-sm-4">  
+                          <div class="alert alert-info alert-dismissible">  
+                                  <button type="button" class="close" data-dismiss="alert">×</button>  
+                                  <strong>Book Data Deleted</strong>  
+                          </div>  
+                  </div>  
+                  <div class="col-sm-4"></div>  
+          </div>             
+      </div>  
+    
+      
+    <div class="panel-body">  
+        <table  class="table table-hover table-sm" datatable [dtOptions]="dtOptions"  
+        [dtTrigger]="dtTrigger"  >  
+            <thead class="thead-light">  
+                <tr>  
+                    <th>Book Name</th>  
+                    <th>Author Name</th>  
+                    <th>Isbn</th>  
+                    <th>Action</th>  
+                      
+                </tr>  
+            </thead>  
+            <tbody>  
+                 <tr *ngFor="let book of books ">  
+                    <td>{{book.book_name}}</td>  
+                    <td>{{book.author_name}}</td>  
+                    <td>{{book.isbn}}</td>  
+                    <td><button (click)="deleteBook(book.id)" class='btn btn-primary'><i class="fa fa-futboll-0">Delete</i></button>   
+                      <button (click)="updateStudent(book.id)" class='btn btn-info'  
+                      data-toggle="modal" data-target="#myModal">Update</button>  
+                    </td>  
+                  </tr>   
+            </tbody><br>  
+        </table>  
+    </div>  
+  </div>   
+    
+  <div class="modal" id="myModal">  
+          <div class="modal-dialog">  
+            <div class="modal-content">  
+                  <form [formGroup]="studentupdateform" #updstu (ngSubmit)="updateBook(updstu)">  
+              <!-- Modal Header -->  
+              <div class="modal-header">  
+                <h4 class="modal-title" style="text-align: center">Update Student</h4>  
+                  
+              </div>  
+                
+              <!-- Modal body -->  
+              <div class="modal-body" *ngFor="let book of booklist " >  
+                  <div [hidden]="isupdated">  
+    
+                      <input type="hidden" class="form-control"  formControlName="student_id" [(ngModel)]="student.student_id">  
+                              <div class="form-group">  
+                                  <label for="name">Book Name</label>  
+                                  <input type="text" class="form-control"  formControlName="book_name" [(ngModel)]="book.book_name"  >  
+                              </div>  
+                        
+                              <div class="form-group">  
+                                  <label for="name">Author Name</label>  
+                                  <input type="text" class="form-control" formControlName="author_name" [(ngModel)]="book.author_name">  
+                              </div>  
+                        
+                              <div class="form-group">  
+                                <label for="name">Isbn</label>  
+                                <input type="text" class="form-control" formControlName="isbn" [(ngModel)]="book.isbn">  
+                            </div>                   
+                    </div>    
+                    <div [hidden]="!isupdated">  
+                        <h4>Book Detail Updated!</h4>  
+                    </div>          
+                        
+              </div>  
+                
+              <!-- Modal footer -->  
+              <div class="modal-footer" >  
+                <button type="submit" class="btn btn-success" [hidden]="isupdated">Update</button>  
+                <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="changeisUpdate()">Close</button>  
+              </div>  
+                
+          </form>  
+            </div>  
+          </div>  
+        </div>  
