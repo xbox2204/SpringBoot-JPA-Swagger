@@ -6,6 +6,11 @@ import org.springframework.context.annotation.Bean;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -16,9 +21,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import springfox.documentation.service.Contact;
 
+import java.util.concurrent.Executor;
+
 @EnableWebMvc
 @EnableSwagger2
 @SpringBootApplication
+@EnableAsync
+@EnableScheduling
 public class DemoApplication {
 
 	public static void main(String[] args) {
@@ -53,4 +62,10 @@ public class DemoApplication {
 				.addResourceLocations("classpath:/META-INF/resources/webjars/");
 
 	}
+	@Bean(name="thPlExectr")
+	public Executor getExecutor(){
+		return new ThreadPoolTaskExecutor();
+	}
+
+
 }
